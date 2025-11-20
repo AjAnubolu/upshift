@@ -159,7 +159,7 @@
             color: var(--primary-dark);
         }
 
-        /* --- REPORTS SECTION (Expanded Detail) --- */
+        /* --- REPORTS SECTION (Expanded) --- */
         #reports {
             background-color: var(--white);
         }
@@ -395,45 +395,47 @@
                         </div>
                         
                         <div class="disclaimer">
-                            <strong>Note:</strong> The following notes focus on Distributed RL infrastructure and High-Performance Computing (HPC) optimization for large-scale models.
+                            <strong>Note:</strong> This report focuses on Distributed RL infrastructure, High-Performance Computing (HPC) optimization, and the emergence of "Agentic AI" as a primary system workload.
                         </div>
 
                         <h3>Overview</h3>
-                        <p>PyTorch Conference 2025 marked a pivot from discussing individual model architectures to "System-Level" scaling. A primary focus was on the infrastructure required to train reasoning models via Reinforcement Learning (RL) at scale. We also observed a strong industry trend moving from "XPU-centric" thinking to "Datacenter-centric" design.</p>
+                        <p>PyTorch Conference 2025 convened over 3,400 developers with a clear message: the industry is pivoting from "Model Architecture" to "System Architecture." The event highlighted that training reasoning models (like DeepSeek-R1) and deploying goal-directed agents requires a fundamental rethink of infrastructure. This year saw the introduction of dedicated "Agentic" tracks and the co-located <strong>Open Agent Summit</strong>, signaling that static prompt-response loops are being replaced by dynamic, multi-step agent workflows.</p>
+                        <p>Major announcements reinforced this, including <strong>torchforge</strong> (for agentic development) and <strong>torchtitan</strong> (for scaling large MoE models), alongside a broader push to treat the entire datacenter—not just the GPU—as the unit of compute.</p>
 
                         <h3>Detailed Session Notes</h3>
 
                         <h4>1. Verl: A Flexible & Efficient RL Framework (ByteDance)</h4>
-                        <p>This session introduced <strong>Verl</strong>, a hybrid framework designed to tackle the massive distributed computing workload required for Large Scale RL (a key ingredient for reasoning models like DeepSeek-R1).</p>
+                        <p>This session introduced <strong>Verl</strong>, a hybrid framework designed to tackle the massive distributed computing workload required for Large Scale RLHF.</p>
                         <ul>
-                            <li><strong>The System Challenge:</strong> RLHF is no longer just about one model. It involves coordinating four distinct models simultaneously: Policy, Reward, Reference, and Value models.</li>
-                            <li><strong>Why Verl?</strong> It balances two competing needs:
+                            <li><strong>The Complexity Challenge:</strong> Modern RLHF involves coordinating four distinct models simultaneously: Policy, Reward, Reference, and Value models. This creates a massive distributed system challenge that standard trainers cannot handle efficiently.</li>
+                            <li><strong>Hybrid-Controller Architecture:</strong> Verl solves this with a dual approach:
                                 <ul>
-                                    <li><strong>Flexibility (MPMD):</strong> Single-controller architecture allows for rapid prototyping of diverse algorithms (PPO, GRPO) with core logic in just a few lines of Python.</li>
-                                    <li><strong>Efficiency (SPMD):</strong> Multi-controller architecture scales to thousands of GPUs using efficient distributed data parallel strategies.</li>
+                                    <li><strong>MPMD (Multiple Program Multiple Data):</strong> Used for flexibility, allowing developers to prototype diverse algorithms (PPO, GRPO) with core logic in just a few lines of Python.</li>
+                                    <li><strong>SPMD (Single Program Multiple Data):</strong> Used for efficiency, enabling scaling to thousands of GPUs.</li>
                                 </ul>
                             </li>
-                            <li><strong>Key Innovation - Async Rollout:</strong> To maximize throughput, Verl decouples the "rollout" (generation) phase from the training phase. This prevents the GPU from sitting idle while waiting for new text generation.</li>
-                            <li><strong>Agentic RL:</strong> A major update is the support for "Agentic" workflows. The Policy LLM is no longer just generating text tokens; it is generating context and executable code, requiring a feedback loop that validates code execution.</li>
+                            <li><strong>3D-HybridEngine & Async Rollout:</strong> To maximize throughput, Verl uses a "3D-HybridEngine" to eliminate memory redundancy and an <strong>Async Rollout</strong> mechanism. This decouples generation from training, preventing GPUs from idling while waiting for text generation—a critical optimization for reasoning models.</li>
+                            <li><strong>Agentic RL:</strong> A key update is support for "Agentic" workflows. The Policy LLM now generates not just text, but context and executable code, requiring a feedback loop that validates code execution results.</li>
+                            <li><strong>Q&A Highlight:</strong> A critical discussion point was the load balancing mismatch in Mixture-of-Experts (MoE) models. When policy and reward models route tokens to different experts, it creates uneven GPU utilization. This remains an open challenge in the field.</li>
                         </ul>
                         
                         <h4>2. Scaling Ingest Pipelines with HPC Principles</h4>
                         <p>A technical deep-dive into the bottlenecks of ingesting raw, high-resolution time series data for training.</p>
                         <ul>
-                            <li><strong>The Bottleneck:</strong> As processor core speeds increase, main memory bandwidth fails to keep up, creating a "memory wall."</li>
-                            <li><strong>Cache Optimization:</strong> The session detailed how successful scaling relies on understanding <strong>Cache Lines</strong>. Moving data in fixed-size blocks means we must optimize for "Cache Hits" (finding data already in the L1/L2/L3 cache) vs. "Cache Misses" (expensive round-trips to main memory).</li>
+                            <li><strong>The Memory Wall:</strong> As processor core speeds increase, main memory bandwidth fails to keep up.</li>
+                            <li><strong>Cache Optimization:</strong> The session emphasized that successful scaling relies on minimizing "Cache Misses." Understanding <strong>Cache Lines</strong>—moving data in fixed-size blocks from main memory to L1/L2/L3 cache—is now a prerequisite for writing high-performance data loaders.</li>
                         </ul>
 
                         <h4>3. Keynote Panel: Scaling Laws & The Datacenter</h4>
-                        <p>Featuring speakers from CoreWeave, SemiAnalysis (Dylan Patel), AMD (Sharon Zhu), and Crusoe (Nitin Perumbeti).</p>
+                        <p>Featuring speakers from CoreWeave, SemiAnalysis, AMD, and Crusoe.</p>
                         <ul>
-                            <li><strong>The Shift:</strong> The industry demand is shifting from "XPU" (individual chip performance) to "Datacenter" (cluster-level performance).</li>
-                            <li><strong>Implication:</strong> Future scaling laws will depend less on the floating-point operations of a single GPU and more on the thermal, power, and interconnect topology of the entire facility.</li>
+                            <li><strong>The "Datacenter as Computer" Shift:</strong> The industry demand has moved from "XPU" (individual chip performance) to "Datacenter" (cluster-level performance).</li>
+                            <li><strong>New Scaling Laws:</strong> Future performance gains will not come from better silicon alone, but from the interconnect topology, thermal management, and power efficiency of the entire facility. The "unit of compute" is no longer the server, but the pod.</li>
                         </ul>
 
                         <div class="closing-reflections">
                             <h3>Closing Reflections</h3>
-                            <p>The "Verl" session presented an open challenge regarding load balancing in Mixture-of-Experts (MoE) models, where routing tokens to different experts creates uneven GPU utilization. A key action item for our research team is to attempt a from-scratch implementation of these RL algorithms to benchmark against Verl's performance. This will help us understand the lower-level distributed challenges before adopting the framework for our curriculum.</p>
+                            <p>PyTorch 2025 demonstrated that we are entering the "System Era" of AI. The conference atmosphere suggested that the low-hanging fruit of model architecture (Transformers) has been harvested; the next frontier is <strong>System-Level Co-Design</strong>. We are moving toward a world where "Agentic AI" drives the workload, and the datacenter itself acts as the computer. For the Upshift Foundation, this validates our focus on "systems skills"—understanding not just how to define a model, but how to orchestrate the massive, distributed machinery required to train and serve it.</p>
                         </div>
                     </div>
                 </details>
