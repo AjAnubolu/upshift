@@ -159,7 +159,7 @@
             color: var(--primary-dark);
         }
 
-        /* --- REPORTS SECTION (Expanded Detail) --- */
+        /* --- REPORTS SECTION (Full Detail) --- */
         #reports {
             background-color: var(--white);
         }
@@ -263,6 +263,24 @@
             color: #1e40af;
             margin-bottom: 25px;
         }
+        
+        /* Special styling for the "Closing Reflections" block to make it stand out */
+        .closing-reflections {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #64748b;
+            font-style: italic;
+            margin-top: 40px;
+        }
+        
+        .closing-reflections h3 {
+            border: none;
+            padding-left: 0;
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
 
         /* --- CONTACT & FOOTER --- */
         #contact {
@@ -292,6 +310,7 @@
             body { background: white; font-size: 11pt; }
             .container { width: 100%; max-width: 100%; margin: 0; padding: 0; }
             .report-item { border: none; }
+            .closing-reflections { break-inside: avoid; background-color: #f1f1f1 !important; -webkit-print-color-adjust: exact; }
         }
 
         @media (max-width: 768px) {
@@ -380,7 +399,8 @@
                         </div>
 
                         <h3>Overview</h3>
-                        <p>NSDI 2025 highlighted the convergence of networking, hardware, and AI. Sessions explored how system-level innovation (congestion control, topology design, and RDMA tuning) is becoming integral to the next generation of machine learning infrastructure.</p>
+                        <p>NSDI 2025 brought together researchers and practitioners to discuss advances in distributed systems, networking, and large-scale machine learning infrastructure. The sessions I attended focused on five major tracks: Infrastructure for Machine Learning, Machine Learning for Networks, RDMA and Transport Systems, Operational Experiences, and Storage Systems.</p>
+                        <p>Each track explored how system-level innovation and machine learning co-design can improve scalability, reliability, and performance. Across these talks, there was a clear theme of convergence, where networking, hardware, and AI are increasingly interdependent. From adaptive congestion control using reinforcement learning to disaggregated GPU and storage systems, NSDI demonstrated how system optimization is becoming integral to the next generation of machine learning infrastructure.</p>
 
                         <h3>Detailed Session Notes</h3>
                         
@@ -413,6 +433,11 @@
                             <li><strong>Papaya:</strong> Federated analytics with trusted execution environments, enabling privacy-preserving queries.</li>
                             <li><strong>Orbit Cache:</strong> Balances load in key-value stores by circulating cached items in a circular queue rather than static caching to handle skewed key popularity.</li>
                         </ul>
+
+                        <div class="closing-reflections">
+                            <h3>Closing Reflections</h3>
+                            <p>Across all sessions, the conference reinforced how system design and machine learning are merging disciplines. The future of scalable AI infrastructure lies in systems that learn, adapt, and self-optimize across layers—networking, compute, and storage. For our nonprofit’s work in applied AI systems, these insights can inform future directions in efficient distributed learning, sustainable compute allocation, and resilient data architectures.</p>
+                        </div>
                     </div>
                 </details>
 
@@ -430,7 +455,8 @@
                         </div>
 
                         <h3>Overview</h3>
-                        <p>GTC 2025 emphasized the "End-to-End AI Lifecycle": training in data centers, validation in simulation, and inference at the edge. Key innovations centered on robotics (Isaac Sim), Agentic AI, and GPU-accelerated preprocessing.</p>
+                        <p>GTC 2025 highlighted NVIDIA’s expanding vision of end-to-end accelerated computing—spanning foundation model training, real-time simulation, and edge deployment. The conference emphasized the convergence of AI, robotics, simulation, and data-center infrastructure to enable a continuous learning cycle: training in data centers, validation in simulation, and real-world inference at the edge.</p>
+                        <p>Across the sessions I attended, key innovations centered on robotics and reinforcement learning validation (Isaac Sim), agentic AI systems that combine reasoning and tool use, multimodal search acceleration, and efficient GPU-based preprocessing pipelines. GTC reinforced that scalable AI requires not just bigger models, but tight integration between hardware, simulation, and intelligent software systems.</p>
 
                         <h3>Detailed Session Notes</h3>
 
@@ -469,6 +495,11 @@
                             <li><strong>Infrastructure:</strong> Showcased low-latency interconnects, InfiniBand topologies, and direct GPU-to-GPU architectures.</li>
                             <li><strong>Trends:</strong> Rapid hardware advancement (cabling, cooling, racks) is now critical to support the next generation of simulation-based AI.</li>
                         </ul>
+
+                        <div class="closing-reflections">
+                            <h3>Closing Reflections</h3>
+                            <p>GTC 2025 demonstrated how AI development is becoming a closed feedback loop—training, simulation, and deployment now function as an integrated continuum. From robotics validation in Isaac Sim to foundation-model-driven autonomy and GPU-accelerated vision processing, the sessions revealed a future in which intelligence is distributed across both the cloud and the edge. For our nonprofit’s mission in applied AI and technology education, these insights highlight the growing importance of system co-design—teaching and developing solutions that integrate hardware, data, and intelligence holistically.</p>
+                        </div>
                     </div>
                 </details>
 
@@ -486,7 +517,8 @@
                         </div>
 
                         <h3>Overview</h3>
-                        <p>OFC 2025 focused on 400G, 800G, and emerging 1.6T Ethernet technologies. The event highlighted how optical interfaces, transceiver form factors, and cable architectures are evolving to meet the thermal and bandwidth needs of AI clusters.</p>
+                        <p>OFC 2025, the world’s premier event for optical networking and data communication technologies, showcased cutting-edge innovations that are redefining high-speed interconnects for AI data centers, cloud infrastructure, and telecommunications. The exhibition floor featured state-of-the-art optical switches, transceivers, and next-generation cabling systems, with growing emphasis on 400G, 800G, and emerging 1.6T Ethernet technologies.</p>
+                        <p>Through discussions and demonstrations from companies like Keysight, Supermicro, and Marvell, I gained practical insight into how optical interfaces, transceiver form factors, and cable architectures work together to deliver reliable, low-latency, and energy-efficient communication at scale.</p>
 
                         <h3>Detailed Session Notes</h3>
 
@@ -518,6 +550,11 @@
                             <li><strong>Active Optical Cables (AOCs):</strong> Integrated transceiver + fiber assemblies for plug-and-play 400G/800G.</li>
                             <li><strong>Direct Attach Copper (DAC):</strong> Passive copper for Top-of-Rack (<3m) due to low latency and cost.</li>
                         </ul>
+
+                        <div class="closing-reflections">
+                            <h3>Closing Reflections</h3>
+                            <p>OFC 2025 offered a hands-on perspective into the physical infrastructure enabling global AI and cloud-scale computing. Observing the detailed structure of optical cables, connector standards, and switch systems deepened my understanding of how data truly moves—photon by photon—through the world’s networks. The experience connected abstract systems concepts to tangible engineering, bridging hardware design, signal integrity, and networking performance. For our nonprofit’s educational and research outreach, these insights will inform future workshops and materials that help students and early-career technologists appreciate the optical foundations of modern computing.</p>
+                        </div>
                     </div>
                 </details>
             </div>
