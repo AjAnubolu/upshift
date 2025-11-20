@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upshift Foundation</title>
+    <meta name="description" content="Upshift Foundation is focused on providing skills that shift the trajectory of students to a learning path with relevant digital job skills.">
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #2563eb; /* Tech Blue */
+            --primary-dark: #1e40af;
+            --secondary: #0f172a; /* Deep Slate */
+            --text: #334155; /* Readable Grey */
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background-color: var(--bg-light);
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        section h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- SPECIFIC SECTIONS --- */
+        /* Hero / About Styling */
+        #about {
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        #about p {
+            font-size: 1.2rem;
+            color: #475569;
+        }
+
+        /* Projects Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #f1f5f9;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .card a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* --- REPORTS SECTION (NEW) --- */
+        #reports {
+            background-color: var(--white);
+        }
+
+        .report-item {
+            background: var(--bg-light);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 20px;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+        }
+
+        summary:hover {
+            background-color: #f1f5f9;
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        details[open] summary::after {
+            content: '-';
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .report-content {
+            padding: 30px;
+            font-size: 0.95rem;
+        }
+
+        .report-content h3 { color: var(--primary); margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .report-content h4 { color: var(--secondary); margin-top: 1rem; font-size: 1rem; }
+        .report-content ul { margin-left: 20px; margin-bottom: 1rem; }
+        .report-meta { font-size: 0.85rem; color: #64748b; margin-bottom: 1rem; font-style: italic; }
+
+        /* --- CONTACT & FOOTER --- */
+        #contact {
+            text-align: center;
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        #contact h2 { color: var(--white); }
+        #contact a { color: #60a5fa; }
+
+        footer {
+            background-color: #020617;
+            color: #94a3b8;
+            text-align: center;
+            padding: 40px 0;
+            font-size: 0.9rem;
+        }
+
+        /* --- PRINT STYLES (For IRS Reports) --- */
+        @media print {
+            header, nav, footer, #contact, #contribute, #projects, #about { display: none; }
+            #reports { display: block !important; padding: 0; border: none; }
+            details { display: block; open: true; }
+            details[open] summary { display: none; } /* Hide the clicker when printing */
+            .report-content { display: block !important; padding: 0; margin-bottom: 3rem; page-break-inside: avoid; }
+            body { background: white; }
+            .container { width: 100%; max-width: 100%; margin: 0; }
+        }
+
+        /* Mobile Nav Adjustment */
+        @media (max-width: 768px) {
+            .nav-wrapper { flex-direction: column; height: auto; padding: 20px 0; }
+            nav ul { margin-top: 20px; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <h1>Upshift Foundation</h1>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#reports">Reports</a></li>
+                    <li><a href="#contribute">Contribute</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+      
+    <main>
+        <section id="about">
+            <div class="container">
+                <h2>About Our Foundation</h2>
+                <p>
+                    Upshift Foundation is dedicated to advancing digital skills and contributing to open-source projects for the benefit of society. We support research, development, and collaboration across various domains. Our current focus is on Polytechnic colleges and open source code contribution to AI research.
+                </p>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <h2>Our Projects & Initiatives</h2>
+                
+                <h3 style="text-align: center; color: #64748b; margin-bottom: 20px;">Educational Outreach</h3>
+                <div class="project-grid">
+                    <div class="card">
+                        <a href="govpoly.html">Computer Lab at Gov Polytechnic, Nellore</a>
+                    </div>
+                    <div class="card">
+                        <a href="womenpoly.html">Computer Lab at Womens Polytechnic, Nellore</a>
+                    </div>
+                    <div class="card">
+                        <a href="ABM.html">ABM Girls School</a>
+                    </div>
+                </div>
+
+                <h3 style="text-align: center; color: #64748b; margin-top: 60px; margin-bottom: 20px;">Open Source Contributions</h3>
+                <div class="project-grid">
+                    <div class="card">
+                        <a href="https://github.com/UpshiftFoundation/AIProfiler">AI Profiler</a>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">Performance profiling tools for AI workloads.</p>
+                    </div>
+                    <div class="card">
+                        <a href="https://github.com/UpshiftFoundation/Llmv">LLM in Verilog</a>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">Hardware description language implementation of LLMs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reports">
+            <div class="container">
+                <h2>FY2025 Conference Impact Reports</h2>
+                <p style="text-align: center; margin-bottom: 40px;">
+                    Technical reports and industry insights gathered from foundation-sponsored conference attendances.
+                </p>
+
+                <details class="report-item">
+                    <summary>NSDI 2025: Networked Systems Design & Implementation</summary>
+                    <div class="report-content">
+                        <div class="report-meta">Author: Ajay Anubolu | Date: 04/30/2025 | Location: Chapel Hill, NC</div>
+                        <p><strong>Overview:</strong> NSDI 2025 brought together researchers and practitioners to discuss advances in distributed systems, networking, and large-scale machine learning infrastructure. The clear theme was convergence: networking, hardware, and AI are increasingly interdependent.</p>
+                        
+                        <h3>1. Infrastructure for Machine Learning</h3>
+                        <h4>AutoCCL</h4>
+                        <p>Automates distributed training communication optimization, achieving 1.23× bandwidth improvements. Core insight: configurations must adapt to workloads.</p>
+                        <h4>SuperServe</h4>
+                        <p>A dynamic ML inference serving framework featuring SubnetAct for instantaneous model switching and reactive scheduling.</p>
+
+                        <h3>2. Machine Learning for Networks</h3>
+                        <p><strong>Mutant:</strong> A reinforcement learning-based congestion control framework that learns from a pool of CC protocols without large datasets.</p>
+                        
+                        <h3>3. RDMA and Network Transport</h3>
+                        <p>Sessions highlighted scalability issues in RDMA networks (ScalaCN). Solutions included <strong>Juneberry</strong> (redesigning RPC for ultra-low latency) and <strong>ODRP</strong> (event-based RDMA offloading).</p>
+
+                        <h3>4. Operational Experiences</h3>
+                        <p><strong>AliCCS (Alibaba):</strong> An ML-driven congestion control system. <br><strong>Aegis:</strong> Fault detection for large-scale AI training, notably identifying fiber link reliability issues.</p>
+                    </div>
+                </details>
+
+                <details class="report-item">
+                    <summary>GTC 2025: NVIDIA GPU Technology Conference</summary>
+                    <div class="report-content">
+                        <div class="report-meta">Author: Ajay Anubolu | Date: 03/19/2025 | Focus: AI, Robotics, Edge Compute</div>
+                        <p><strong>Overview:</strong> GTC 2025 highlighted the vision of end-to-end accelerated computing. Key innovations centered on robotics validation (Isaac Sim), agentic AI systems, and efficient GPU-based preprocessing pipelines.</p>
+
+                        <h3>1. Edge AI and Robotics</h3>
+                        <p>The "Edge-to-Cloud AI Lifecycle" was central. Models are trained in data centers, verified in simulation (Isaac Platform), and deployed for inference, minimizing the "sim-to-real" gap.</p>
+
+                        <h3>2. Autonomous Vehicles (AV 2.0)</h3>
+                        <p>Next-gen AVs leverage <strong>Cosmos World</strong> for reasoning. The AV 2.0 stack emphasizes "Agentic Autonomy"—systems capable of real-time reasoning from first and third-person perspectives.</p>
+
+                        <h3>3. Vision and Search Acceleration</h3>
+                        <p>Tools like <strong>nvImageCodec</strong> and <strong>cv-cuda</strong> eliminate CPU bottlenecks, moving preprocessing entirely to the GPU to improve throughput for semantic visual search.</p>
+                    </div>
+                </details>
+
+                <details class="report-item">
+                    <summary>OFC 2025: Optical Fiber Communication Conference</summary>
+                    <div class="report-content">
+                        <div class="report-meta">Author: Ajay Anubolu | Date: 04/03/2025 | Focus: Optical Networking</div>
+                        <p><strong>Overview:</strong> OFC 2025 showcased the physical infrastructure redefining high-speed interconnects for AI data centers, with a focus on 800G and 1.6T Ethernet technologies.</p>
+
+                        <h3>1. Emerging Trends</h3>
+                        <ul>
+                            <li><strong>800G & 1.6T Transceivers:</strong> PAM4-based modules enabling next-gen backbones.</li>
+                            <li><strong>Liquid-Cooled Optical Switches:</strong> Supermicro demonstrated chassis for 51.2 Tbps ASICs.</li>
+                        </ul>
+
+                        <h3>2. Optical Switches and Interconnects</h3>
+                        <p>Technologies included <strong>Co-Packaged Optics (CPO)</strong> to reduce electrical trace lengths and <strong>Silicon Photonics Switches</strong> for near-zero latency.</p>
+
+                        <h3>3. Cable Technologies</h3>
+                        <p>Analyzed distinctions between Single-Mode (long-haul), Multi-Mode (short-reach), and Active Optical Cables (AOCs) for plug-and-play 400G/800G connections.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <section id="contribute">
+            <div class="container">
+                <h2>How to Contribute</h2>
+                <p>
+                    Upshift Foundation is a private foundation. We welcome ideas in the areas of upskilling students from marginalized communities. We are also working on AI tools. Project ideas are welcome.
+                </p>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <p>
+                    If you have any questions or suggestions, feel free to reach out to us at <br>
+                    <a href="mailto:info@upshiftfoundation.org" style="color: #93c5fd; font-weight: bold; font-size: 1.2rem;">info@upshiftfoundation.org</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Upshift Foundation.</p>
+            <p>Upshift Foundation is a 501(c)(3) nonprofit organization. EIN: 87-2775548.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
