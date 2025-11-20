@@ -159,7 +159,7 @@
             color: var(--primary-dark);
         }
 
-        /* --- REPORTS SECTION (Full Detail) --- */
+        /* --- REPORTS SECTION (Expanded Detail) --- */
         #reports {
             background-color: var(--white);
         }
@@ -264,7 +264,7 @@
             margin-bottom: 25px;
         }
         
-        /* Special styling for the "Closing Reflections" block to make it stand out */
+        /* Special styling for the "Closing Reflections" block */
         .closing-reflections {
             background-color: #f8fafc;
             padding: 20px;
@@ -385,6 +385,59 @@
                     Detailed technical notes from foundation-sponsored conference attendances.
                 </p>
 
+                <details class="report-item" open>
+                    <summary>PyTorch Conference 2025</summary>
+                    <div class="report-content">
+                        <div class="report-meta">
+                            <span><strong>Author:</strong> Ajay Anubolu</span>
+                            <span><strong>Date:</strong> 10/23/2025</span>
+                            <span><strong>Location:</strong> San Francisco, CA</span>
+                        </div>
+                        
+                        <div class="disclaimer">
+                            <strong>Note:</strong> The following notes focus on Distributed RL infrastructure and High-Performance Computing (HPC) optimization for large-scale models.
+                        </div>
+
+                        <h3>Overview</h3>
+                        <p>PyTorch Conference 2025 marked a pivot from discussing individual model architectures to "System-Level" scaling. A primary focus was on the infrastructure required to train reasoning models via Reinforcement Learning (RL) at scale. We also observed a strong industry trend moving from "XPU-centric" thinking to "Datacenter-centric" design.</p>
+
+                        <h3>Detailed Session Notes</h3>
+
+                        <h4>1. Verl: A Flexible & Efficient RL Framework (ByteDance)</h4>
+                        <p>This session introduced <strong>Verl</strong>, a hybrid framework designed to tackle the massive distributed computing workload required for Large Scale RL (a key ingredient for reasoning models like DeepSeek-R1).</p>
+                        <ul>
+                            <li><strong>The System Challenge:</strong> RLHF is no longer just about one model. It involves coordinating four distinct models simultaneously: Policy, Reward, Reference, and Value models.</li>
+                            <li><strong>Why Verl?</strong> It balances two competing needs:
+                                <ul>
+                                    <li><strong>Flexibility (MPMD):</strong> Single-controller architecture allows for rapid prototyping of diverse algorithms (PPO, GRPO) with core logic in just a few lines of Python.</li>
+                                    <li><strong>Efficiency (SPMD):</strong> Multi-controller architecture scales to thousands of GPUs using efficient distributed data parallel strategies.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Key Innovation - Async Rollout:</strong> To maximize throughput, Verl decouples the "rollout" (generation) phase from the training phase. This prevents the GPU from sitting idle while waiting for new text generation.</li>
+                            <li><strong>Agentic RL:</strong> A major update is the support for "Agentic" workflows. The Policy LLM is no longer just generating text tokens; it is generating context and executable code, requiring a feedback loop that validates code execution.</li>
+                        </ul>
+                        
+                        <h4>2. Scaling Ingest Pipelines with HPC Principles</h4>
+                        <p>A technical deep-dive into the bottlenecks of ingesting raw, high-resolution time series data for training.</p>
+                        <ul>
+                            <li><strong>The Bottleneck:</strong> As processor core speeds increase, main memory bandwidth fails to keep up, creating a "memory wall."</li>
+                            <li><strong>Cache Optimization:</strong> The session detailed how successful scaling relies on understanding <strong>Cache Lines</strong>. Moving data in fixed-size blocks means we must optimize for "Cache Hits" (finding data already in the L1/L2/L3 cache) vs. "Cache Misses" (expensive round-trips to main memory).</li>
+                        </ul>
+
+                        <h4>3. Keynote Panel: Scaling Laws & The Datacenter</h4>
+                        <p>Featuring speakers from CoreWeave, SemiAnalysis (Dylan Patel), AMD (Sharon Zhu), and Crusoe (Nitin Perumbeti).</p>
+                        <ul>
+                            <li><strong>The Shift:</strong> The industry demand is shifting from "XPU" (individual chip performance) to "Datacenter" (cluster-level performance).</li>
+                            <li><strong>Implication:</strong> Future scaling laws will depend less on the floating-point operations of a single GPU and more on the thermal, power, and interconnect topology of the entire facility.</li>
+                        </ul>
+
+                        <div class="closing-reflections">
+                            <h3>Closing Reflections</h3>
+                            <p>The "Verl" session presented an open challenge regarding load balancing in Mixture-of-Experts (MoE) models, where routing tokens to different experts creates uneven GPU utilization. A key action item for our research team is to attempt a from-scratch implementation of these RL algorithms to benchmark against Verl's performance. This will help us understand the lower-level distributed challenges before adopting the framework for our curriculum.</p>
+                        </div>
+                    </div>
+                </details>
+
                 <details class="report-item">
                     <summary>NSDI 2025: Networked Systems Design & Implementation</summary>
                     <div class="report-content">
@@ -400,43 +453,29 @@
 
                         <h3>Overview</h3>
                         <p>NSDI 2025 brought together researchers and practitioners to discuss advances in distributed systems, networking, and large-scale machine learning infrastructure. The sessions I attended focused on five major tracks: Infrastructure for Machine Learning, Machine Learning for Networks, RDMA and Transport Systems, Operational Experiences, and Storage Systems.</p>
-                        <p>Each track explored how system-level innovation and machine learning co-design can improve scalability, reliability, and performance. Across these talks, there was a clear theme of convergence, where networking, hardware, and AI are increasingly interdependent. From adaptive congestion control using reinforcement learning to disaggregated GPU and storage systems, NSDI demonstrated how system optimization is becoming integral to the next generation of machine learning infrastructure.</p>
 
                         <h3>Detailed Session Notes</h3>
                         
                         <h4>1. Infrastructure for Machine Learning</h4>
                         <ul>
-                            <li><strong>AutoCCL:</strong> Automates distributed training communication. It builds tuning subspaces and applies coordinate descent to adapt to specific workloads. Results showed <strong>1.23× bandwidth</strong> and <strong>0.75× latency</strong> improvements compared to static configurations.</li>
-                            <li><strong>OptiReduce:</strong> Optimizes collective communication for unreliable networks. It uses "UBT transport" and shared median timeouts to handle packet loss, shifting from ring to mesh topologies (Transpose AllReduce) for efficiency.</li>
-                            <li><strong>Efficient Direct-Connect Topologies:</strong> Introduces topology-aware expansion for large clusters using low-diameter graphs. Features "Breadth-first broadcast" (BFB) to minimize congestion.</li>
+                            <li><strong>AutoCCL:</strong> Automates distributed training communication. It builds tuning subspaces and applies coordinate descent to adapt to specific workloads. Results showed <strong>1.23× bandwidth</strong> and <strong>0.75× latency</strong> improvements.</li>
                             <li><strong>SuperServe:</strong> A dynamic serving framework. Features "SubnetAct" for instantaneous model switching and "SlackFitL" to reactively schedule workloads under bursty demand.</li>
                         </ul>
 
                         <h4>2. Machine Learning for Networks</h4>
                         <ul>
-                            <li><strong>Mutant:</strong> A reinforcement learning-based congestion control framework. It learns from a pool of protocols without large datasets, using <strong>Bayesian linear regression</strong> for reward prediction in the user space.</li>
-                            <li><strong>CATO:</strong> A multi-objective optimization system for traffic modeling. It handles encrypted traffic via Pareto-optimal pipeline search, balancing predictive performance against system cost.</li>
+                            <li><strong>Mutant:</strong> A reinforcement learning-based congestion control framework. It learns from a pool of protocols without large datasets, using <strong>Bayesian linear regression</strong> for reward prediction.</li>
                         </ul>
 
                         <h4>3. RDMA and Network Transport</h4>
                         <ul>
                             <li><strong>ScalaCN:</strong> Addressed scalability in RDMA. Highlighted that scaling can increase latency by 34× and reduce bandwidth by 87% due to opaque RNIC hardware behavior.</li>
-                            <li><strong>Juneberry:</strong> Redesigns RPC with RDMA for ultra-low latency. Allows server NICs to execute and respond directly, bypassing CPU involvement for single-round-trip performance.</li>
-                            <li><strong>ODRP:</strong> Event-based RDMA offloading that chains work requests to encode complex logic, reducing CPU scheduling overhead.</li>
-                        </ul>
-
-                        <h4>4. Operational Experiences & Storage</h4>
-                        <ul>
-                            <li><strong>AliCCS (Alibaba):</strong> ML-driven congestion control that dynamically selects algorithms per flow and learns IP-invariant representations.</li>
-                            <li><strong>GPU Disaggregation (Prism):</strong> Supports transparent training across disaggregated GPU clusters using topology-aware resource management.</li>
-                            <li><strong>Aegis:</strong> Fault detection for large-scale AI training. Key finding: fiber links were often less reliable than DAC cables.</li>
-                            <li><strong>Papaya:</strong> Federated analytics with trusted execution environments, enabling privacy-preserving queries.</li>
-                            <li><strong>Orbit Cache:</strong> Balances load in key-value stores by circulating cached items in a circular queue rather than static caching to handle skewed key popularity.</li>
+                            <li><strong>Juneberry:</strong> Redesigns RPC with RDMA for ultra-low latency, allowing server NICs to execute responses directly.</li>
                         </ul>
 
                         <div class="closing-reflections">
                             <h3>Closing Reflections</h3>
-                            <p>Across all sessions, the conference reinforced how system design and machine learning are merging disciplines. The future of scalable AI infrastructure lies in systems that learn, adapt, and self-optimize across layers—networking, compute, and storage. For our nonprofit’s work in applied AI systems, these insights can inform future directions in efficient distributed learning, sustainable compute allocation, and resilient data architectures.</p>
+                            <p>Across all sessions, the conference reinforced how system design and machine learning are merging disciplines. The future of scalable AI infrastructure lies in systems that learn, adapt, and self-optimize across layers—networking, compute, and storage.</p>
                         </div>
                     </div>
                 </details>
@@ -451,54 +490,27 @@
                         </div>
 
                         <div class="disclaimer">
-                            <strong>Note:</strong> These notes summarize key technical sessions regarding the end-to-end AI lifecycle and hardware integration.
+                            <strong>Note:</strong> These notes summarize key technical sessions regarding the end-to-end AI lifecycle.
                         </div>
 
                         <h3>Overview</h3>
-                        <p>GTC 2025 highlighted NVIDIA’s expanding vision of end-to-end accelerated computing—spanning foundation model training, real-time simulation, and edge deployment. The conference emphasized the convergence of AI, robotics, simulation, and data-center infrastructure to enable a continuous learning cycle: training in data centers, validation in simulation, and real-world inference at the edge.</p>
-                        <p>Across the sessions I attended, key innovations centered on robotics and reinforcement learning validation (Isaac Sim), agentic AI systems that combine reasoning and tool use, multimodal search acceleration, and efficient GPU-based preprocessing pipelines. GTC reinforced that scalable AI requires not just bigger models, but tight integration between hardware, simulation, and intelligent software systems.</p>
+                        <p>GTC 2025 highlighted NVIDIA’s expanding vision of end-to-end accelerated computing. The conference emphasized the convergence of AI, robotics, simulation, and data-center infrastructure to enable a continuous learning cycle.</p>
 
                         <h3>Detailed Session Notes</h3>
 
                         <h4>1. Edge AI and Robotics</h4>
                         <ul>
-                            <li><strong>Edge-to-Cloud Cycle:</strong> A closed-loop system where models are trained, tested in simulation, deployed, and then retrained on collected data. This ensures models evolve safely.</li>
-                            <li><strong>Isaac Platform:</strong> Enables RL-based robotics development in Omniverse.
-                                <ul>
-                                    <li><strong>Inside-out AI:</strong> Agents trained in simulation (e.g., Isaac for RL).</li>
-                                    <li><strong>Outside-in AI:</strong> Perception-driven AI (e.g., Metropolis VLM).</li>
-                                    <li><strong>Integration:</strong> Validation in Isaac's realistic physics engine minimizes "sim-to-real" transfer errors.</li>
-                                </ul>
-                            </li>
+                            <li><strong>Isaac Platform:</strong> Enables RL-based robotics development in Omniverse. Validating "Inside-out AI" (agents trained in simulation) in realistic physics engines minimizes "sim-to-real" transfer errors.</li>
                         </ul>
 
-                        <h4>2. Autonomous Vehicles (AV 2.0)</h4>
+                        <h4>2. Vision and Search Acceleration</h4>
                         <ul>
-                            <li><strong>Cosmos World:</strong> A foundation model environment for reasoning about traffic/planning. Reduces reliance on hand-crafted heuristics by learning behaviors from data.</li>
-                            <li><strong>AV 2.0 Stack:</strong> Combines multimodal perception with self-supervised world models. Features "Agentic AI" which is goal-oriented, tool-aware, and operates in both ego-vehicle and observer perspectives.</li>
-                        </ul>
-
-                        <h4>3. Vision and Search Acceleration</h4>
-                        <ul>
-                            <li><strong>Visual Search:</strong> Explored semantic search (retrieving items by meaning, not just pixel match). A major bottleneck identified was preprocessing latency.</li>
-                            <li><strong>GPU Acceleration Tools:</strong>
-                                <ul>
-                                    <li><strong>nvImageCodec:</strong> A GPU-based decoder replacing OpenCV to eliminate CPU-bound decoding.</li>
-                                    <li><strong>cv-cuda:</strong> GPU-accelerated replacement for NumPy/OpenCV for batch preprocessing.</li>
-                                </ul>
-                            </li>
-                            <li><strong>Impact:</strong> Moving preprocessing, decoding, and inference entirely to the GPU significantly improves throughput.</li>
-                        </ul>
-
-                        <h4>4. Exhibit Hall Highlights</h4>
-                        <ul>
-                            <li><strong>Infrastructure:</strong> Showcased low-latency interconnects, InfiniBand topologies, and direct GPU-to-GPU architectures.</li>
-                            <li><strong>Trends:</strong> Rapid hardware advancement (cabling, cooling, racks) is now critical to support the next generation of simulation-based AI.</li>
+                            <li><strong>Visual Search:</strong> Explored semantic search. Tools like <strong>nvImageCodec</strong> and <strong>cv-cuda</strong> eliminate CPU bottlenecks by moving the entire preprocessing pipeline to the GPU.</li>
                         </ul>
 
                         <div class="closing-reflections">
                             <h3>Closing Reflections</h3>
-                            <p>GTC 2025 demonstrated how AI development is becoming a closed feedback loop—training, simulation, and deployment now function as an integrated continuum. From robotics validation in Isaac Sim to foundation-model-driven autonomy and GPU-accelerated vision processing, the sessions revealed a future in which intelligence is distributed across both the cloud and the edge. For our nonprofit’s mission in applied AI and technology education, these insights highlight the growing importance of system co-design—teaching and developing solutions that integrate hardware, data, and intelligence holistically.</p>
+                            <p>GTC 2025 demonstrated how AI development is becoming a closed feedback loop. From robotics validation in Isaac Sim to GPU-accelerated vision processing, the sessions revealed a future in which intelligence is distributed across both the cloud and the edge.</p>
                         </div>
                     </div>
                 </details>
@@ -517,43 +529,25 @@
                         </div>
 
                         <h3>Overview</h3>
-                        <p>OFC 2025, the world’s premier event for optical networking and data communication technologies, showcased cutting-edge innovations that are redefining high-speed interconnects for AI data centers, cloud infrastructure, and telecommunications. The exhibition floor featured state-of-the-art optical switches, transceivers, and next-generation cabling systems, with growing emphasis on 400G, 800G, and emerging 1.6T Ethernet technologies.</p>
-                        <p>Through discussions and demonstrations from companies like Keysight, Supermicro, and Marvell, I gained practical insight into how optical interfaces, transceiver form factors, and cable architectures work together to deliver reliable, low-latency, and energy-efficient communication at scale.</p>
+                        <p>OFC 2025 showcased cutting-edge innovations redefining high-speed interconnects for AI data centers, with growing emphasis on 400G, 800G, and emerging 1.6T Ethernet technologies.</p>
 
                         <h3>Detailed Session Notes</h3>
 
                         <h4>1. Emerging Trends & Demos</h4>
                         <ul>
-                            <li><strong>Transceivers:</strong> Move toward 800G and 1.6T using PAM4 signaling and coherent optics.</li>
-                            <li><strong>Liquid-Cooled Switches:</strong> <strong>Supermicro</strong> demonstrated switch chassis for 51.2 Tbps ASICs with direct liquid loops to manage thermal density.</li>
-                            <li><strong>Validation:</strong> <strong>Keysight</strong> exhibited BER testers for 112G PAM4 lanes (crucial for 800G links).</li>
-                            <li><strong>Switch Silicon:</strong> <strong>Marvell</strong> featured Teralynx ASICs with integrated DSPs for better power efficiency.</li>
+                            <li><strong>Transceivers:</strong> Move toward 800G and 1.6T using PAM4 signaling.</li>
+                            <li><strong>Liquid-Cooled Switches:</strong> Supermicro demonstrated switch chassis for 51.2 Tbps ASICs with direct liquid loops.</li>
                         </ul>
 
-                        <h4>2. Optical Switches and Interconnects</h4>
+                        <h4>2. Optical Interconnects</h4>
                         <ul>
                             <li><strong>Co-Packaged Optics (CPO):</strong> Integrating optical engines directly with switch ASICs to reduce electrical trace lengths.</li>
                             <li><strong>Silicon Photonics:</strong> Using photonic integrated circuits (PICs) for optical circuit switching with near-zero latency.</li>
-                            <li><strong>Form Factors:</strong>
-                                <ul>
-                                    <li><strong>OSFP:</strong> Optimized for thermal management (800G).</li>
-                                    <li><strong>QSFP-DD:</strong> Optimized for density (compatible with legacy).</li>
-                                    <li><strong>OSFP-XD:</strong> Emerging standard for 1.6T (16 lanes).</li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <h4>3. Cable Architecture Deep Dive</h4>
-                        <ul>
-                            <li><strong>Single-Mode Fiber (SMF):</strong> Standard for long-haul/data-center interconnects (1310/1550nm). Terminated with LC or MPO connectors.</li>
-                            <li><strong>Multi-Mode Fiber (MMF):</strong> Short-reach (within rack), typically OM4/OM5.</li>
-                            <li><strong>Active Optical Cables (AOCs):</strong> Integrated transceiver + fiber assemblies for plug-and-play 400G/800G.</li>
-                            <li><strong>Direct Attach Copper (DAC):</strong> Passive copper for Top-of-Rack (<3m) due to low latency and cost.</li>
                         </ul>
 
                         <div class="closing-reflections">
                             <h3>Closing Reflections</h3>
-                            <p>OFC 2025 offered a hands-on perspective into the physical infrastructure enabling global AI and cloud-scale computing. Observing the detailed structure of optical cables, connector standards, and switch systems deepened my understanding of how data truly moves—photon by photon—through the world’s networks. The experience connected abstract systems concepts to tangible engineering, bridging hardware design, signal integrity, and networking performance. For our nonprofit’s educational and research outreach, these insights will inform future workshops and materials that help students and early-career technologists appreciate the optical foundations of modern computing.</p>
+                            <p>OFC 2025 offered a hands-on perspective into the physical infrastructure enabling global AI. Observing the detailed structure of optical cables and switch systems deepened my understanding of how data moves—photon by photon—through the world’s networks.</p>
                         </div>
                     </div>
                 </details>
